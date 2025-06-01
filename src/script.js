@@ -19,10 +19,22 @@ camera.position.z = 14;
 
 scene.add(camera);
 
+function onWindowResize() {
+  // Update camera aspect and projection
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+
+  // Update renderer size
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
+document.addEventListener("resize", onWindowResize);
 const renderer = new THREE.WebGLRenderer({ canvas });
 renderer.render(scene, camera);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 renderer.setSize(sizes.width, sizes.height);
+
+window.addEventListener("resize", onWindowResize, false);
 
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
